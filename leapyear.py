@@ -6,6 +6,9 @@ from datetime import datetime
 def is_leap_year(year: int) -> bool:
     """Returns a Boolean indicating whether the given YEAR is a leap year,
     using the rules for the Gregorian calendar."""
+    # Precondition: year is late enough that the Gregorian calendar
+    #   actually existed
+    assert year > 1582, "Year is pre-Gregorian"
     # Gregorian leap-year rules:
     #   - If a year is evenly divisible by 400, it's a leap year.
     #   - If it's evenly divisible by 100 but not by 400, it's not a leap year.
@@ -18,6 +21,9 @@ def is_leap_year(year: int) -> bool:
         leap = False
     elif year % 400 == 0:
         leap = True
+    # Postcondition:
+    # return value is True iff year is a leap year in the Gregorian
+    #   calendar
     return leap
 
 def past_present_future(year: int, positive: bool) -> str:

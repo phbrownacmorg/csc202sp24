@@ -9,7 +9,7 @@
 # Big Show: 7' = 84", 383 lbs. (https://en.wikipedia.org/wiki/Big_Show)
 # Kate Moss: 5'7" = 67", 121 lbs.(https://www.sociosite.net/age-height-weight-of-celebrities/kate-moss)
 
-def calc_bmi(height:float, weight: float) -> float:
+def calc_bmi(height: float, weight: float) -> float:
     return 703 * weight / height**2
 
 def classify_bmi(bmi: float) -> str:

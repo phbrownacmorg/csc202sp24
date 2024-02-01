@@ -12,26 +12,26 @@ class TestValidDate(unittest.TestCase):
         # Tuple, use assertEqual
         self.assertEqual(parseDate('2/1/2024'), (2, 1, 2024))
         
-    # def test_ZeroParts(self) -> None:
-    #     with self.assertRaises(AssertionError) as cm:
-    #         parseDate('')
-    #     self.assertEqual(cm.exception.args[0], 'Wrong number of parts')
+    def test_ZeroParts(self) -> None:
+        with self.assertRaises(AssertionError) as cm:
+            parseDate('')
+        self.assertEqual(cm.exception.args[0], 'Wrong number of parts')
 
-    # def test_TwoParts(self) -> None:
-    #     with self.assertRaises(AssertionError) as cm:
-    #         parseDate('2/7')
-    #     self.assertEqual(cm.exception.args[0], 'Wrong number of parts')
+    def test_TwoParts(self) -> None:
+        with self.assertRaises(AssertionError) as cm:
+            parseDate('2/7')
+        self.assertEqual(cm.exception.args[0], 'Wrong number of parts')
 
-    # def test_FourParts(self) -> None:
-    #     with self.assertRaises(AssertionError) as cm:
-    #         parseDate('2/7/2023/')
-    #     self.assertEqual(cm.exception.args[0], 'Wrong number of parts')
+    def test_FourParts(self) -> None:
+        with self.assertRaises(AssertionError) as cm:
+            parseDate('2/7/2023/')
+        self.assertEqual(cm.exception.args[0], 'Wrong number of parts')
 
-    # def test_nonIntMonth(self) -> None:
-    #     with self.assertRaises(ValueError) as cm:
-    #         parseDate('two/7/2023')
-    #     self.assertEqual(cm.exception.args[0], 
-    #                     "invalid literal for int() with base 10: 'two'")
+    def test_nonIntMonth(self) -> None:
+        with self.assertRaises(ValueError) as cm:
+            parseDate('two/7/2023')
+        self.assertEqual(cm.exception.args[0], 
+                        "invalid literal for int() with base 10: 'two'")
 
     def test_nonIntMonth(self) -> None:
         with self.assertRaises(ValueError) as cm:
