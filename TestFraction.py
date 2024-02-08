@@ -61,7 +61,34 @@ class TestFraction(unittest.TestCase):
         self.assertEqual(Fraction(12, 24).getDenom(), 2)
 
     def testEq_1_2_1_2(self) -> None:
-        self.assertTrue(Fraction(1,2) == Fraction(1,2))
+        self.assertTrue(Fraction(1, 2) == Fraction(1, 2))
+
+    def testEq_1_2_3_6(self) -> None:
+        self.assertTrue(Fraction(1, 2) == Fraction(3, 6))
+
+    def testEq_n8_36_2_n9(self) -> None:
+        self.assertTrue(Fraction(-8, 36) == Fraction(2, -9))
+
+    def testEq_same_num(self) -> None:
+        self.assertFalse(Fraction(2, 3) == Fraction(2, 5))
+
+    def testEq_same_denom(self) -> None:
+        self.assertFalse(Fraction(3, 5) == Fraction(2, 5))
+
+    def testEq_both_differ(self) -> None:
+        self.assertFalse(Fraction(2, 3) == Fraction(3, 4))
+
+    def testAdd_halves(self) -> None:
+        self.assertTrue(Fraction(1, 1) == 
+            Fraction(1, 2) + Fraction(512, 1024))
+
+    def testAdd_1_3_1_2(self) -> None:
+        # Note assertEqual uses our __eq__ method
+        self.assertEqual(Fraction(5, 6), Fraction(1, 3) + Fraction(1, 2))
+
+    def testAdd_1_3_n1_2(self) -> None:
+        # Note assertEqual uses our __eq__ method
+        self.assertEqual(Fraction(-1, 6), Fraction(1, 3) + Fraction(-1, 2))
 
 
 if __name__ == '__main__':

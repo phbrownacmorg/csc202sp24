@@ -43,11 +43,8 @@ class Fraction:
     
     def __eq__(self, other: object) -> bool:
         """Determine whether the object OTHER is equal to self."""
-        equal = True
-        if not isinstance(object, Fraction):
-            equal = False
-        else:
-            fracObj: Fraction = cast(Fraction, other)
+        equal = False
+        if isinstance(other, Fraction):
             equal = (self.numr == other.numr
                      and self.denom == other.denom)
         return equal
