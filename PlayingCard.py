@@ -7,10 +7,10 @@ class PlayingCard:
     # Class attributes
     TOP_RANK = 13
     BOTTOM_RANK = 1
-    SUITS: list[str] = ['clubs', 'diamonds', 'hearts', 'spades']
-    RANKS: list[int] = list(range(BOTTOM_RANK, TOP_RANK+1))
-    RANK_NAMES: list[str] = ['', 'ace'] + list(map(str, range(2,11))) \
-                                + ['jack', 'queen', 'king']
+    SUITS: tuple[str, ...] = ('clubs', 'diamonds', 'hearts', 'spades')
+    RANKS: tuple[int, ...] = tuple(range(BOTTOM_RANK, TOP_RANK+1))
+    RANK_NAMES: tuple[str, ...] = ('', 'ace') + tuple(map(str, range(2,11))) \
+                                + ('jack', 'queen', 'king')
     
     def _invariant(self) -> bool:
         # Pre: none
@@ -39,9 +39,9 @@ class PlayingCard:
     def rank_name(self) -> str:
         return self.RANK_NAMES[self._rank]
 
-    # "Named constructor"
-    @staticmethod
-    def makeCard(rankName: str, suit: str) -> 'PlayingCard':
+    # "Named constructor".  Also called a "factory function".
+    @classmethod
+    def makeCard(cls, rankName: str, suit: str) -> 'PlayingCard':
         # Pre:
         assert \
             rankName.lower() in \
@@ -54,8 +54,8 @@ class PlayingCard:
         # assert card._invariant() # Already asserted in the constructor
         return card
 
-    @staticmethod
-    def make_deck() -> list['PlayingCard']:
+    @classmethod
+    def make_deck(cls) -> list['PlayingCard']:
         deck : list[PlayingCard] = []
         for rank in range(PlayingCard.BOTTOM_RANK, PlayingCard.TOP_RANK+1):
             for suit in PlayingCard.SUITS:
