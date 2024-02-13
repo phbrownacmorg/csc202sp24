@@ -8,7 +8,7 @@ class TestPlayingCard(unittest.TestCase):
     # Every method that starts with the string "test"
     # will be executed as a unit test
     def testTrue(self) -> None:
-        self.assertEqual(PlayingCard(3, 'clubs').TOP_RANK, 13)
+        self.assertEqual(PlayingCard.TOP_RANK, 13)
 
     def testSuitClubs(self) -> None:
         self.assertEqual(PlayingCard(3, 'clubs').suit(), 'clubs')
