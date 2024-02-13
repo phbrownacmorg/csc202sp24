@@ -49,7 +49,13 @@ class AbstractCard(abc.ABC):
     def __str__(self) -> str:
         """String representation of a card."""
         return (self.suit() + ' ' + self.rank_name()).strip()
-      
+    
+    def __eq__(self, other: object) -> bool:
+        equal = hasattr(other, 'rank_name') and hasattr(other, 'suit')
+        equal = equal and self.rank_name() == other.rank_name() and \
+                        self.suit() == other.suit()
+        return equal
+
     @classmethod
     def makeCard(cls, rankName: str, suit: str) -> 'AbstractCard':
         """Make a card from the given RANKNAME (a string) and SUIT.

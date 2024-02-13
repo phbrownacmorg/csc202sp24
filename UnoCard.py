@@ -40,4 +40,24 @@ class UnoCard(AbstractCard):
     @classmethod
     def make_deck(cls) -> list[AbstractCard]:
         """Make an Uno deck."""
-        return []
+        # Precondition: none
+        deck: list[AbstractCard] = []
+
+        # Append the 0's
+        for suit in cls.COLOR_SUITS:
+            deck.append(cls(0, suit))
+
+        # Do the rest of the color cards
+        for rank in cls.COLOR_RANKS[1:]:
+            for suit in cls.COLOR_SUITS:
+                for i in range(2):
+                    deck.append(cls(rank, suit))
+
+        # Wild cards
+        for rank in cls.WILD_RANKS:
+            for i in range(4):
+                deck.append(cls(rank, cls.WILD_SUIT))
+
+        # Postcondition:
+        assert len(deck) == 108
+        return deck

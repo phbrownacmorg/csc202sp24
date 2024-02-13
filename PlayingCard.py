@@ -14,10 +14,14 @@ class PlayingCard(AbstractCard):
     RANK_NAMES: tuple[str, ...] = ('', 'ace') + tuple(map(str, range(2,11))) \
                                 + ('jack', 'queen', 'king')
 
+    def __str__(self) -> str:
+        """String representation of a playing card."""
+        return self.rank_name() + ' of ' + self.suit()
+
     @classmethod
     def make_deck(cls) -> list[AbstractCard]:
         """Make a deck of regular playing cards."""
-        deck : list[AbstractCard] = []
+        deck: list[AbstractCard] = []
         for rank in range(PlayingCard.BOTTOM_RANK, PlayingCard.TOP_RANK+1):
             for suit in PlayingCard.SUITS:
                 deck.append(PlayingCard(rank, suit))
