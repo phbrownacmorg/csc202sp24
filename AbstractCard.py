@@ -66,10 +66,10 @@ class AbstractCard(abc.ABC):
         assert \
             rankName.lower() in \
                 cls.RANK_NAMES[cls.BOTTOM_RANK:] \
-            and suit in cls.SUITS
+            and suit.lower() in cls.SUITS
         card: cls = cls(
                         cls.RANK_NAMES.index(rankName.lower()),
-                        suit)
+                        suit.lower())
         # Post: returns a PlayingCard of the specified suit and rank.
         # assert card._invariant() # Already asserted in the constructor
         return card
