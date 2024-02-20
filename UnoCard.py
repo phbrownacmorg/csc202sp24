@@ -8,7 +8,7 @@ class UnoCard(AbstractCard):
     TOP_RANK: int = 14
     TOP_COLOR_RANK: int = 12
     COLOR_RANKS: tuple[int, ...] = tuple(range(TOP_COLOR_RANK+1))
-    COLOR_SUITS: tuple[str, ...] = ('red', 'yellow', 'green', 'blue')
+    COLOR_SUITS: tuple[str, ...] = ('blue', 'green', 'red', 'yellow')
     WILD_RANKS: tuple[int, ...] = tuple(range(TOP_COLOR_RANK+1,
                                               TOP_RANK+1))
     WILD_SUIT: str = 'wild'

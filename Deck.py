@@ -1,3 +1,4 @@
+import random
 from AbstractCard import AbstractCard
 from typing import Iterable
 
@@ -51,3 +52,9 @@ class Deck:
     
     def shuffle(self) -> None:
         """Shuffle the deck."""
+        # Set the number of iterations before starting
+        size = len(self._cards)
+        newcards: list[AbstractCard] = []
+        for i in range(size):
+            newcards.append(random.choice(self._cards))
+        self._cards = newcards

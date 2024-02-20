@@ -1,3 +1,4 @@
+import random
 import unittest
 # import the code you want to test here
 from Deck import Deck
@@ -407,6 +408,19 @@ class TestDeck(unittest.TestCase):
         wild draw 4
         wild draw 4
 """)
+        
+    def testShuffle(self) -> None:
+        # Make the results predictable.
+        # If I had more than one test here, the call to random.seed()
+        # would go in setUp().
+        random.seed(401)
+        self._52.shuffle()
+        for i in range(52):
+            with self.subTest(i=i):
+                card = self._52.deal()
+                cardvalue = 51 - ((card.rank() - 1) * len(card.SUITS) 
+                                  + card.SUITS.index(card.suit()))
+                self.assertNotEqual(i - cardvalue, 0)
 
 if __name__ == '__main__':
     unittest.main()

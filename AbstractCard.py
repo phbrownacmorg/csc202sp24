@@ -1,5 +1,7 @@
 import abc
+from functools import total_ordering
 
+@total_ordering
 class AbstractCard(abc.ABC):
     """Abstract base class to represent a playing card of a kind that is
     defined by a rank and a suit.  Examples include regular (French)
@@ -51,10 +53,27 @@ class AbstractCard(abc.ABC):
         return (self.suit() + ' ' + self.rank_name()).strip()
     
     def __eq__(self, other: object) -> bool:
-        equal = hasattr(other, 'rank_name') and hasattr(other, 'suit')
-        equal = equal and self.rank_name() == other.rank_name() and \
+        """Returns True if and only if self and other compare equal.
+        For the purposes of this method, two cards are equal if their
+        ranks and suits are equal.  This may give unexpected results
+        when comparing AbstractCards of different classes, if both
+        classes use some of the same suit names but have different
+        assignments of rank names to ranks."""
+        equal = hasattr(other, 'rank') and hasattr(other, 'suit')
+        equal = equal and self.rank() == other.rank() and \
                         self.suit() == other.suit()
         return equal
+
+    def __lt__(self, other: 'AbstractCard') -> bool:
+        """Returns True if and only if self < other.  For the purposes
+        of this method, cards are compared first by rank.  If the ranks
+        are equal, the suits are compared lexicographically. This __lt__
+        is consistent with __eq__."""
+        lessthan = self.rank() < other.rank()
+        if self.rank() == other.rank():
+            lessthan = self.suit() < other.suit()
+        return lessthan
+
 
     @classmethod
     def makeCard(cls, rankName: str, suit: str) -> 'AbstractCard':
