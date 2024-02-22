@@ -24,6 +24,11 @@ class TestDeck(unittest.TestCase):
         self._160.add(PlayingCard.make_deck())
         self._160.add(UnoCard.make_deck())
 
+        # Here because random is used both by testShuffle() and
+        # testAddToMiddle...  Don't Repeat Yourself.
+        random.seed(401)
+
+
     # Every method that starts with the string "test"
     # will be executed as a unit test
     def testLenEmpty(self) -> None:
@@ -70,6 +75,50 @@ class TestDeck(unittest.TestCase):
         self._108.addCard(new_card)
         self.assertEqual(len(self._108), 109)
         self.assertEqual(self._108.deal(), new_card)
+
+    def testAddBottomToEmpty(self) -> None:
+        new_card = PlayingCard.makeCard('Queen', 'Hearts')
+        self._empty.addToBottom(new_card)
+        self.assertEqual(len(self._empty), 1)
+        self.assertEqual(self._empty.deal(), new_card)
+
+    def testAddBottomTo52(self) -> None:
+        new_card = PlayingCard.makeCard('Queen', 'Hearts')
+        self._52.addToBottom(new_card)
+        self.assertEqual(len(self._52), 53)
+        for i in range(52): # Get rid of the top 52 cards
+            self._52.deal()
+        self.assertEqual(self._52.deal(), new_card)
+
+    def testAddMiddleToEmpty(self) -> None:
+        new_card = PlayingCard.makeCard('Queen', 'Hearts')
+        self._empty.addToMiddle(new_card)
+        self.assertEqual(len(self._empty), 1)
+        self.assertEqual(self._empty.deal(), new_card)
+
+    def testAddMiddleTo52(self) -> None:
+        new_card = PlayingCard.makeCard('Queen', 'Hearts')
+        self._52.addToMiddle(new_card) # Random location, 31 with this seed
+        self.assertEqual(len(self._52), 53)
+        #print(self._52)
+        for i in range(52-31): # Get rid of the top 21 cards
+            self._52.deal()
+        self.assertEqual(self._52.deal(), new_card)
+
+    def testAddMiddle0To52(self) -> None:
+        new_card = PlayingCard.makeCard('Queen', 'Hearts')
+        self._52.addToMiddle(new_card, 0)
+        self.assertEqual(len(self._52), 53)
+        for i in range(52): # Get rid of the top 52 cards
+            self._52.deal()
+        self.assertEqual(self._52.deal(), new_card)
+
+    def testAddMiddle52To52(self) -> None:
+        new_card = PlayingCard.makeCard('Queen', 'Hearts')
+        self._52.addToMiddle(new_card, 52)
+        self.assertEqual(len(self._52), 53)
+        self.assertEqual(self._52.deal(), new_card)
+
 
     def testStrEmpty(self) -> None:
         self.assertEqual(str(self._empty), 'Deck, listed bottom to top:\n')
@@ -134,106 +183,106 @@ class TestDeck(unittest.TestCase):
     def testStr108(self) -> None:
         #print(self._108)
         self.assertEqual(str(self._108), """Deck, listed bottom to top:
+        blue 0
+        green 0
         red 0
         yellow 0
-        green 0
-        blue 0
+        blue 1
+        blue 1
+        green 1
+        green 1
         red 1
         red 1
         yellow 1
         yellow 1
-        green 1
-        green 1
-        blue 1
-        blue 1
+        blue 2
+        blue 2
+        green 2
+        green 2
         red 2
         red 2
         yellow 2
         yellow 2
-        green 2
-        green 2
-        blue 2
-        blue 2
+        blue 3
+        blue 3
+        green 3
+        green 3
         red 3
         red 3
         yellow 3
         yellow 3
-        green 3
-        green 3
-        blue 3
-        blue 3
+        blue 4
+        blue 4
+        green 4
+        green 4
         red 4
         red 4
         yellow 4
         yellow 4
-        green 4
-        green 4
-        blue 4
-        blue 4
+        blue 5
+        blue 5
+        green 5
+        green 5
         red 5
         red 5
         yellow 5
         yellow 5
-        green 5
-        green 5
-        blue 5
-        blue 5
+        blue 6
+        blue 6
+        green 6
+        green 6
         red 6
         red 6
         yellow 6
         yellow 6
-        green 6
-        green 6
-        blue 6
-        blue 6
+        blue 7
+        blue 7
+        green 7
+        green 7
         red 7
         red 7
         yellow 7
         yellow 7
-        green 7
-        green 7
-        blue 7
-        blue 7
+        blue 8
+        blue 8
+        green 8
+        green 8
         red 8
         red 8
         yellow 8
         yellow 8
-        green 8
-        green 8
-        blue 8
-        blue 8
+        blue 9
+        blue 9
+        green 9
+        green 9
         red 9
         red 9
         yellow 9
         yellow 9
-        green 9
-        green 9
-        blue 9
-        blue 9
+        blue skip
+        blue skip
+        green skip
+        green skip
         red skip
         red skip
         yellow skip
         yellow skip
-        green skip
-        green skip
-        blue skip
-        blue skip
+        blue reverse
+        blue reverse
+        green reverse
+        green reverse
         red reverse
         red reverse
         yellow reverse
         yellow reverse
-        green reverse
-        green reverse
-        blue reverse
-        blue reverse
+        blue draw 2
+        blue draw 2
+        green draw 2
+        green draw 2
         red draw 2
         red draw 2
         yellow draw 2
         yellow draw 2
-        green draw 2
-        green draw 2
-        blue draw 2
-        blue draw 2
         wild
         wild
         wild
@@ -245,7 +294,7 @@ class TestDeck(unittest.TestCase):
 """)
 
     def testStr160(self) -> None:
-        print(self._160)
+        # print(self._160) # Polymorphic!  Each card knows how to print
         self.assertEqual(str(self._160), """Deck, listed bottom to top:
         ace of clubs
         ace of diamonds
@@ -299,106 +348,106 @@ class TestDeck(unittest.TestCase):
         king of diamonds
         king of hearts
         king of spades
+        blue 0
+        green 0
         red 0
         yellow 0
-        green 0
-        blue 0
+        blue 1
+        blue 1
+        green 1
+        green 1
         red 1
         red 1
         yellow 1
         yellow 1
-        green 1
-        green 1
-        blue 1
-        blue 1
+        blue 2
+        blue 2
+        green 2
+        green 2
         red 2
         red 2
         yellow 2
         yellow 2
-        green 2
-        green 2
-        blue 2
-        blue 2
+        blue 3
+        blue 3
+        green 3
+        green 3
         red 3
         red 3
         yellow 3
         yellow 3
-        green 3
-        green 3
-        blue 3
-        blue 3
+        blue 4
+        blue 4
+        green 4
+        green 4
         red 4
         red 4
         yellow 4
         yellow 4
-        green 4
-        green 4
-        blue 4
-        blue 4
+        blue 5
+        blue 5
+        green 5
+        green 5
         red 5
         red 5
         yellow 5
         yellow 5
-        green 5
-        green 5
-        blue 5
-        blue 5
+        blue 6
+        blue 6
+        green 6
+        green 6
         red 6
         red 6
         yellow 6
         yellow 6
-        green 6
-        green 6
-        blue 6
-        blue 6
+        blue 7
+        blue 7
+        green 7
+        green 7
         red 7
         red 7
         yellow 7
         yellow 7
-        green 7
-        green 7
-        blue 7
-        blue 7
+        blue 8
+        blue 8
+        green 8
+        green 8
         red 8
         red 8
         yellow 8
         yellow 8
-        green 8
-        green 8
-        blue 8
-        blue 8
+        blue 9
+        blue 9
+        green 9
+        green 9
         red 9
         red 9
         yellow 9
         yellow 9
-        green 9
-        green 9
-        blue 9
-        blue 9
+        blue skip
+        blue skip
+        green skip
+        green skip
         red skip
         red skip
         yellow skip
         yellow skip
-        green skip
-        green skip
-        blue skip
-        blue skip
+        blue reverse
+        blue reverse
+        green reverse
+        green reverse
         red reverse
         red reverse
         yellow reverse
         yellow reverse
-        green reverse
-        green reverse
-        blue reverse
-        blue reverse
+        blue draw 2
+        blue draw 2
+        green draw 2
+        green draw 2
         red draw 2
         red draw 2
         yellow draw 2
         yellow draw 2
-        green draw 2
-        green draw 2
-        blue draw 2
-        blue draw 2
         wild
         wild
         wild
@@ -410,10 +459,7 @@ class TestDeck(unittest.TestCase):
 """)
         
     def testShuffle(self) -> None:
-        # Make the results predictable.
-        # If I had more than one test here, the call to random.seed()
-        # would go in setUp().
-        random.seed(401)
+        # Make the results pblueictable.
         self._52.shuffle()
         for i in range(52):
             with self.subTest(i=i):

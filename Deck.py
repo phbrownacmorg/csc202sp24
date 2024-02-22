@@ -36,6 +36,24 @@ class Deck:
         # Post: len(self) has increased by 1, and...
         assert self._cards[-1] == newCard
 
+    def addToBottom(self, newCard: AbstractCard) -> None:
+        """Add a single card to the bottom of the deck."""
+        # Pre: none
+        self._cards.insert(0, newCard)
+        # Post: len(self) has increased by 1, and...
+        assert self._cards[0] == newCard
+
+    def addToMiddle(self, newCard: AbstractCard, idx: int = -1) -> None:
+        """Add a single card to the middle of the deck at index IDX.
+        If IDX is not provided, a random location is chosen."""
+        # Pre:
+        assert -1 <= idx <= len(self)
+        if idx < 0:
+            idx = random.randrange(len(self) + 1)
+        self._cards.insert(idx, newCard)
+        # Post: len(self) has increased by 1, and...
+        assert self._cards[idx] == newCard
+
     def add(self, others: Iterable[AbstractCard]) -> None:
         # Pre: none
         self._cards.extend(others)
