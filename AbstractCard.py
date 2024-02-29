@@ -60,8 +60,7 @@ class AbstractCard(abc.ABC):
         classes use some of the same suit names but have different
         assignments of rank names to ranks."""
         equal = hasattr(other, 'rank') and hasattr(other, 'suit')
-        equal = equal and self.rank() == other.rank() and \
-                        self.suit() == other.suit()
+        equal = equal and self.rank() == other.rank() and self.suit() == other.suit() # type: ignore
         return equal
 
     def __lt__(self, other: 'AbstractCard') -> bool:
@@ -86,9 +85,7 @@ class AbstractCard(abc.ABC):
             rankName.lower() in \
                 cls.RANK_NAMES[cls.BOTTOM_RANK:] \
             and suit.lower() in cls.SUITS
-        card: cls = cls(
-                        cls.RANK_NAMES.index(rankName.lower()),
-                        suit.lower())
+        card = cls(cls.RANK_NAMES.index(rankName.lower()), suit.lower())
         # Post: returns a PlayingCard of the specified suit and rank.
         # assert card._invariant() # Already asserted in the constructor
         return card
