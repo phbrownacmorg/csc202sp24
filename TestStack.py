@@ -5,12 +5,12 @@ from Stack import Stack
 class TestStack(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.empty = Stack[int]()
+        self.empty = Stack[int]() # type: ignore
 
-        self._1 = Stack[int]()
+        self._1 = Stack[int]() # type: ignore
         self._1.push(7)
 
-        self._4 = Stack[int]()
+        self._4 = Stack[int]() # type: ignore
         self._4.push(4)
         self._4.push(9)
         self._4.push(3)

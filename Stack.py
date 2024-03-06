@@ -6,7 +6,7 @@ class Stack(Generic[T]):
     """Class to represent a stack of T.  The stack is implemented as a
     list, with the end of the list being the top of the stack."""
 
-    def __init__(self):
+    def __init__(self): # type: ignore
         """Create an empty stack."""
         self.__items: list[T] = []
 
