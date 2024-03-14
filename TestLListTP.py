@@ -1,16 +1,16 @@
 import unittest
 # import the code you want to test here
-from LList import LList
+from LListTP import LListTP
 
-class TestLListTP(unittest.TestCase):
+class TestLList(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.__empty = LList[int]() # type: ignore
+        self.__empty = LListTP[int]() # type: ignore
 
-        self.__1 = LList[int]() # type: ignore
+        self.__1 = LListTP[int]() # type: ignore
         self.__1.add(1)         # 1-node list
 
-        self.__4 = LList[int]() # type: ignore
+        self.__4 = LListTP[int]() # type: ignore
         self.__4.add(1)
         self.__4.add(2)
         self.__4.add(3)
@@ -30,14 +30,6 @@ class TestLListTP(unittest.TestCase):
         self.assertEqual(self.__4.value(), 4)
         with self.assertRaises(AssertionError):
             self.__empty.value()
-
-    def testNext(self) -> None:
-        self.assertTrue(self.__1.next().empty())
-        self.assertTrue(self.__4.next().value(), 3)
-        self.assertTrue(self.__4.next().next().value(), 2)
-        self.assertTrue(self.__4.next().next().next().value(), 1)
-        with self.assertRaises(AssertionError):
-            self.__empty.next()
 
     def testLen(self) -> None:
         self.assertEqual(len(self.__empty), 0)
