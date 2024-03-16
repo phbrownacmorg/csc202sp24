@@ -5,12 +5,12 @@ from LList import LList
 class TestLList(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.__empty = LList[int]() # empty list
+        self.__empty = LList[int]() # type: ignore
 
-        self.__1 = LList[int]() 
+        self.__1 = LList[int]() # type: ignore 
         self.__1.add(1)         # 1-node list
 
-        self.__4 = LList[int]()
+        self.__4 = LList[int]() # type: ignore
         self.__4.add(1)
         self.__4.add(2)
         self.__4.add(3)

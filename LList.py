@@ -17,7 +17,7 @@ class LList(Generic[T]):
             valid = self.__data is not None and self.__next.__invariant()
         return valid
         
-    def __init__(self):
+    def __init__(self): # type: ignore
         """Create an empty list."""
         self.__data = None # Reference to data value
         self.__next = None # Reference to next node
@@ -33,14 +33,14 @@ class LList(Generic[T]):
     def value(self) -> T:
         """Returns the value stored in the current node."""
         # Pre:
-        assert self.__invariant and not self.empty()
-        return self.__data
+        assert self.__invariant() and not self.empty()
+        return cast(T, self.__data)
     
     def next(self) -> 'LList[T]':
         """Returns the next node after this one."""
         # Pre:
-        assert self.__invariant and not self.empty()
-        return self.__next
+        assert self.__invariant() and not self.empty()
+        return cast(LList[T], self.__next)
     
     def __len__(self) -> int:
         """Returns the number of nodes in the list (not counting the sentinel)."""
@@ -76,7 +76,7 @@ class LList(Generic[T]):
 
     def add(self, val: T) -> None:
         """Add a node with value VAL at the beginning of the list."""
-        newnode = LList[T]()
+        newnode: LList[T] = LList[T]() # type: ignore
         newnode.__data = self.__data
         newnode.__next = self.__next
         self.__next = newnode
@@ -105,4 +105,4 @@ class LList(Generic[T]):
             self.__next = self.next().__next
         else:            # followed by another node
             value = self.next().pop(idx - 1)
-        return cast(T, value)
+        return value
