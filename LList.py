@@ -8,13 +8,13 @@ class LList(Generic[T]):
     a linked list.  The empty list is represented by a sentinel node.
     This list does not support storing None as a data value."""
 
-    def __invariant(self) -> bool:
+    def _invariant(self) -> bool:
         """Class invariant."""
         valid = True
         if self.__next is None: # Sentinel node (empty list)
             valid = self.__data is None
         else: # There's more list after this node
-            valid = self.__data is not None and self.__next.__invariant()
+            valid = self.__data is not None and self.__next._invariant()
         return valid
         
     def __init__(self): # type: ignore
@@ -22,7 +22,7 @@ class LList(Generic[T]):
         self.__data = None # Reference to data value
         self.__next = None # Reference to next node
         # Post:
-        assert self.__invariant()
+        assert self._invariant()
 
     # QUERY METHODS
 
@@ -33,13 +33,13 @@ class LList(Generic[T]):
     def value(self) -> T:
         """Returns the value stored in the current node."""
         # Pre:
-        assert self.__invariant() and not self.empty()
+        assert self._invariant() and not self.empty()
         return cast(T, self.__data)
     
     def next(self) -> 'LList[T]':
         """Returns the next node after this one."""
         # Pre:
-        assert self.__invariant() and not self.empty()
+        assert self._invariant() and not self.empty()
         return cast(LList[T], self.__next)
     
     def __len__(self) -> int:
@@ -82,7 +82,7 @@ class LList(Generic[T]):
         self.__next = newnode
         self.__data = val
         # Post:
-        assert self.__data == val and self.__invariant()
+        assert self.__data == val and self._invariant()
 
     def pop(self, idx: int = -1) -> T:
         """Returns the item at index IDX, remiving it from the list."""
