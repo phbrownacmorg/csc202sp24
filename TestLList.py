@@ -2,7 +2,7 @@ import unittest
 # import the code you want to test here
 from LList import LList
 
-class TestLListTP(unittest.TestCase):
+class TestLList(unittest.TestCase):
 
     def setUp(self) -> None:
         self.__empty = LList[int]() # type: ignore

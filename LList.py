@@ -101,8 +101,9 @@ class LList(Generic[T]):
         elif idx == 0:   # a node...
             value = self.value()
             # Remove the item from the list.  Order is important!
-            self.__data = self.next().__data
-            self.__next = self.next().__next
+            nextNode = self.next()
+            self.__data = nextNode.__data # Causes the precondition to fail if self.next() is called on the following line
+            self.__next = nextNode.__next
         else:            # followed by another node
             value = self.next().pop(idx - 1)
         return value
