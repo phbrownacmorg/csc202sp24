@@ -146,14 +146,31 @@ def test_baseconvert() -> None:
     assert baseconvert(0x1b1, 12) == '301'
     print('Tests for base conversion passed.')
 
-def fib(n) -> int:
+def slowfib(n) -> int:
     """Simple recursive calculation of a Fibonacci number."""
     # Pre:
     assert n >= 0, f'n must be non-negative; {n} supplied'
     if n < 2:
         return n
     else:
-        return fib(n-1) + fib(n-2)
+        return slowfib(n-1) + slowfib(n-2)
+    
+def fib(n) -> int:
+    """More efficient recursive FIbonacci calculation."""
+    # Pre:
+    assert n >= 0, f'n must be non-negative; {n} supplied'
+    return fastfib(n)[0]
+
+def fastfib(n: int) -> tuple[int, int]:
+    """Fibonacci calculation, returning *two* integers, fib(n)
+    and fib(n-1).  This avoids recalculating fib(n-1)."""
+    # Pre: (error message is incomplete)
+    assert n >= 0, f'n must be non-negative; {n} supplied'
+    if n < 2:
+        return (n, 0)
+    else:
+        fib_n_less_1 = fastfib(n - 1) # Just call it once!
+        return fib_n_less_1[0] + fib_n_less_1[1], fib_n_less_1[0]
 
 def test_fib() -> None:
     assert fib(0) == 0
@@ -171,7 +188,7 @@ def test_fib() -> None:
     assert fib(20) == 6765
     assert fib(30) == 832040
     assert fib(40) == 102334155
-    #assert fib(50) == 12586269025
+    assert fib(50) == 12586269025
     print('Tests for Fibonacci passed.')
 
 
