@@ -6,8 +6,8 @@ def draw_archery_ring(t: Turtle, radius: float, width: float) -> None:
     # Base case: draw the circle
     pencolors = ['black', 'black', 'black', 'white', 'black']
     fillcolors = ['yellow', 'red', 'blue', 'black', 'white']
-    t.pencolor(pencolors[(radius - width) // (2*width)])
-    t.fillcolor(fillcolors[(radius - width) // (2*width)])
+    t.pencolor(pencolors[int((radius - width) // (2*width))])
+    t.fillcolor(fillcolors[int((radius - width) // (2*width))])
     t.begin_fill()
     t.circle(radius)
     t.end_fill()

@@ -1,4 +1,4 @@
-def make_change_greedy(amount: int, coin_values: tuple[int]) -> list[int]:
+def make_change_greedy(amount: int, coin_values: tuple[int, ...]) -> list[int]:
     """Makes change for AMOUNT using COIN_VALUES.  Returns a list of how many
     of each coin is needed.  Uses a greedy algorithm to make the change, which
     assumes that each coin value divides the next bigger one evenly.  Other
