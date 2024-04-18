@@ -3,6 +3,8 @@ from typing import TypeVar
 T = TypeVar('T')
 
 def binsearch(key: T, array: list[T]) -> bool:
+    """Perform a recursive binary search for KEY in ARRAY,
+    using slicing."""
     mid: int = len(array) // 2
     if len(array) == 0:
         found = False
@@ -15,6 +17,11 @@ def binsearch(key: T, array: list[T]) -> bool:
     return found
 
 def partition(array: list[T], start: int, end: int) -> int:
+    """Partition ARRAY[START:END], and return the final position
+    of the pivot.  The pivot is simply array[start]."""
+    # Pre:
+    assert 0 <= start < len(array) and start < end \
+        and 0 <= end <= len(array)
     pivot = array[start] # Pick an element to partition around
 
     mid = start+1
@@ -30,14 +37,22 @@ def partition(array: list[T], start: int, end: int) -> int:
     array[start], array[top] = array[top], array[start]
     return top
 
-def quicksort(array: list[T], start: int = 0,  end: int = -100) -> None:
+def quicksort(array: list[T], start: int = 0, end: int = -1) -> None:
     """Perform a quicksort on ARRAY from index START up to but not
     including index END, in place."""
-    if end == -100: # Handle the default parameter
+    # Pre:
+    assert 0 <= start <= len(array) and \
+            ((start <= end and (0 <= end <= len(array))) \
+             or (start == 0 and end == -1)), \
+                f"{start}, {end}, {len(array)}"
+    # Make END default to len(array).  Needed because we can't call
+    # len(array) in the argument list.
+    if end == -1: 
         end = len(array)
 
     # Base case: list of length < 2 is already sorted
-    if end - start > 1: # Recursive case
+    # Recursive case:
+    if end - start > 1:
         mid = partition(array, start, end)
         quicksort(array, start, mid)
         quicksort(array, mid+1, end)

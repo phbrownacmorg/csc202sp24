@@ -37,6 +37,8 @@ class TestSort(unittest.TestCase):
         self.__1: list[int] = [1]
         self.__2s: list[int] = list(range(2))
         self.__2u: list[int] = list(range(1, -1, -1))
+        self.__9: list[int] = list(range(5)) + list(range(4))
+        random.shuffle(self.__9)
         self.__10: list[int] = list(range(10))
         random.shuffle(self.__10)
 
@@ -46,9 +48,13 @@ class TestSort(unittest.TestCase):
         self.assertEqual(partition(self.__2u, 0, 2), 1)
         self.assertEqual(self.__2u, [0, 1])
 
+    def testPartition9(self) -> None:
+        self.assertEqual(partition(self.__9, 0, 9), 1)
+        self.assertTrue(TestSort.is_partitioned(self.__9, 1))
+
     def testPartition10(self) -> None:
-        self.assertEqual(partition(self.__10, 0, 10), 5)
-        self.assertTrue(TestSort.is_partitioned(self.__10, 5))
+        self.assertEqual(partition(self.__10, 0, 10), 8)
+        self.assertTrue(TestSort.is_partitioned(self.__10, 8))
 
     # Every method that starts with the string "test"
     # will be executed as a unit test
@@ -69,6 +75,11 @@ class TestSort(unittest.TestCase):
         self.assertFalse(TestSort.is_sorted(self.__2u))
         quicksort(self.__2u)
         self.assertTrue(TestSort.is_sorted(self.__2u))
+
+    def testSort9(self) -> None:
+        self.assertFalse(TestSort.is_sorted(self.__9))
+        quicksort(self.__9)
+        self.assertTrue(TestSort.is_sorted(self.__9))
 
     # @unittest.skip('')
     def testSort10(self) -> None:
