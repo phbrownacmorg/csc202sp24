@@ -1,4 +1,6 @@
 from typing import cast, Generic, TypeVar
+from Q2Stacks import Queue
+from Stack import Stack
 
 T = TypeVar('T')
 
@@ -41,15 +43,27 @@ class BinTree(Generic[T]):
         assert not self.empty()
         return self._data
     
+    def left(self) -> 'BinTree[T]':
+        """Get the left subtree."""
+        # Pre:
+        assert self.hasLeftChild()
+        return self._left
+    
+    def right(self) -> 'BinTree[T]':
+        """Get the right subtree."""
+        # Pre:
+        assert self.hasRightChild()
+        return self._right
+    
     def __len__(self) -> int:
         """Count the nodes in the tree."""
         nodes = 0
         if not self.empty():
             nodes = 1
             if self.hasLeftChild():
-                nodes += len(self._left)
+                nodes += len(self.left())
             if self.hasRightChild():
-                nodes += len(self._right)
+                nodes += len(self.right())
         return nodes
     
     def height(self) -> int:
@@ -58,11 +72,11 @@ class BinTree(Generic[T]):
         if not self.empty():
             height = 1
             if self.hasLeftChild() and self.hasRightChild():
-                height += max(self._left.height(), self._right.height())
+                height += max(self.left().height(), self.right().height())
             elif self.hasLeftChild(): # No right child
-                height += self._left.height()
+                height += self.left().height()
             elif self.hasRightChild(): # No left child
-                height += self._right.height()
+                height += self.right().height()
         return height
     
     def preorder(self) -> list[T]:
@@ -71,9 +85,9 @@ class BinTree(Generic[T]):
         if not self.empty():
             result += [self.data()]
             if self.hasLeftChild():
-                result += self._left.preorder()
+                result += self.left().preorder()
             if self.hasRightChild():
-                result += self._right.preorder()
+                result += self.right().preorder()
         return result
     
     def postorder(self) -> list[T]:
@@ -81,9 +95,9 @@ class BinTree(Generic[T]):
         result: list[T] = []
         if not self.empty():
             if self.hasLeftChild():
-                result += self._left.postorder()
+                result += self.left().postorder()
             if self.hasRightChild():
-                result += self._right.postorder()
+                result += self.right().postorder()
             result += [self.data()]
         return result
     
@@ -92,8 +106,45 @@ class BinTree(Generic[T]):
         result: list[T] = []
         if not self.empty():
             if self.hasLeftChild():
-                result += self._left.inorder()
+                result += self.left().inorder()
             result += [self.data()]
             if self.hasRightChild():
-                result += self._right.inorder()
+                result += self.right().inorder()
+        return result
+    
+    def preorderBreadthFirst(self) -> list[T]:
+        result: list[T] = []
+        if not self.empty():
+            queue: Queue[BinTree[T]] = Queue[BinTree[T]]()
+            queue.add(self)
+            while not queue.empty():
+                # Pop the first node off the queue
+                current = queue.pop()
+                # Process the node (parent)
+                result.append(current.data())
+                if current.hasLeftChild():
+                    queue.add(current.left())
+                if current.hasRightChild():
+                    queue.add(current.right())
+        return result
+
+    def postorderBreadthFirst(self) -> list[T]:
+        result: list[T] = []
+        if not self.empty():
+            queue: Queue[BinTree[T]] = Queue[BinTree[T]]()
+            stack: Stack[BinTree[T]] = Stack[BinTree[T]]()
+            queue.add(self)
+            while not queue.empty():
+                # Pop the first node off the queue
+                current = queue.pop()
+                # Process the children, right child first 
+                #    because the stack will reverse them
+                if current.hasRightChild():
+                    queue.add(current.right())
+                if current.hasLeftChild():
+                    queue.add(current.left())
+                # Process the node (parent)
+                stack.push(current)
+            while not stack.empty():
+                result.append(stack.pop().data())
         return result
