@@ -7,12 +7,12 @@ from Q2Stacks import Queue
 class TestQueue(unittest.TestCase):
 
     def setUp(self) -> None:
-        self._empty = Queue[int]()
+        self._empty = Queue[int]() # type: ignore
 
-        self._1 = Queue[int]()
+        self._1 = Queue[int]() # type: ignore
         self._1.add(7)
 
-        self._4 = Queue[int]()
+        self._4 = Queue[int]() # type: ignore
         self._4.add(4)
         self._4.add(9)
         self._4.add(3)

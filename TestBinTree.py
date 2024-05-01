@@ -7,39 +7,38 @@ class TestBinTree(unittest.TestCase):
     def setUp(self) -> None:
         self.__empty = BinTree[str]() # type: ignore
 
-        self.__1 = BinTree[str]() # type: ignore
-        self.__1._data = 'Tabitha' # 1-node tree
+        # 1-node tree
+        self.__1 = BinTree[str]('Tabitha') # type: ignore
 
-        self.__4 = BinTree[str]() # type: ignore
-        self.__4._data = 'Ariel'
-        self.__4._left = BinTree[str]('Ariana')
-        self.__4._right = BinTree[str]('Luci')
-        self.__4._right._left = BinTree[str]('Elliott') # 4-node tree
-
+        # 4-node tree
+        self.__4 = BinTree[str]('Ariel') # type: ignore
+        self.__4._left = BinTree[str]('Ariana') # type: ignore
+        self.__4._right = BinTree[str]('Luci') # type: ignore
+        self.__4.right()._left = BinTree[str]('Elliott') # type: ignore
 
         self.__7 = BinTree[str]('Jay')
-        self.__7._left = BinTree['str']('Ariel')
-        self.__7._right = BinTree[str]('Tabitha')
-        self.__7._left._left = BinTree[str]('Ariana')
-        self.__7._left._right = BinTree[str]('Khushi')
-        self.__7._right._left = BinTree[str]('Luci')
-        self.__7._right._right = BinTree[str]('Zariyah')
+        self.__7._left = BinTree['str']('Ariel') # type: ignore
+        self.__7._right = BinTree[str]('Tabitha') # type: ignore
+        self.__7.left()._left = BinTree[str]('Ariana') # type: ignore
+        self.__7.left()._right = BinTree[str]('Khushi') # type: ignore
+        self.__7.right()._left = BinTree[str]('Luci') # type: ignore
+        self.__7.right()._right = BinTree[str]('Zariyah') # type: ignore
 
         self.__15 = BinTree[str]('Jay')
-        self.__15._left = BinTree['str']('Ariel')
-        self.__15._right = BinTree[str]('Tabitha')
-        self.__15._left._left = BinTree[str]('Ariana')
-        self.__15._left._right = BinTree[str]('Khushi')
-        self.__15._right._left = BinTree[str]('Luci')
-        self.__15._right._right = BinTree[str]('Zariyah')
-        self.__15._left._left._left = BinTree[str]('Nathan')
-        self.__15._left._left._right = BinTree[str]('Caleb D.')
-        self.__15._left._right._left = BinTree[str]('Caleb M.')
-        self.__15._left._right._right = BinTree[str]('Marco')
-        self.__15._right._left._left = BinTree[str]('Elliott')
-        self.__15._right._left._right = BinTree[str]('Skyler')
-        self.__15._right._right._left = BinTree[str]('Trig')
-        self.__15._right._right._right = BinTree[str]('Tyson')
+        self.__15._left = BinTree['str']('Ariel') # type: ignore
+        self.__15._right = BinTree[str]('Tabitha') # type: ignore
+        self.__15.left()._left = BinTree[str]('Ariana') # type: ignore
+        self.__15.left()._right = BinTree[str]('Khushi') # type: ignore
+        self.__15.right()._left = BinTree[str]('Luci') # type: ignore
+        self.__15.right()._right = BinTree[str]('Zariyah') # type: ignore
+        self.__15.left().left()._left = BinTree[str]('Nathan') # type: ignore
+        self.__15.left().left()._right = BinTree[str]('Caleb D.') # type: ignore
+        self.__15.left().right()._left = BinTree[str]('Caleb M.') # type: ignore
+        self.__15.left().right()._right = BinTree[str]('Marco') # type: ignore
+        self.__15.right().left()._left = BinTree[str]('Elliott') # type: ignore
+        self.__15.right().left()._right = BinTree[str]('Skyler') # type: ignore
+        self.__15.right().right()._left = BinTree[str]('Trig') # type: ignore
+        self.__15.right().right()._right = BinTree[str]('Tyson') # type: ignore
 
     # Every method that starts with the string "test"
     # will be executed as a unit test

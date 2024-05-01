@@ -30,11 +30,11 @@ class Hashtable:
                 bin = bin.next()
         return valid
 
-    def __init__(self):
+    def __init__(self): # type: ignore
         """Create an empty hashtable.  The initial size is 4."""
         self._bins: list[LList[tuple[str, str]]] = []
         for i in range(Hashtable.INITIAL_SIZE):
-            self._bins.append(LList[tuple[str, str]]())
+            self._bins.append(LList[tuple[str, str]]()) # type: ignore
         # Post:
         assert self._invariant(), 'Constructor postcondition failed'
 

@@ -12,10 +12,11 @@ class TestSort(unittest.TestCase):
     def is_sorted(array: list[T]) -> bool:
         sorted = True
         for i in range(len(array) - 1):
-            if array[i] > array[i+1]:
+            if array[i] > array[i+1]: # type: ignore
                 sorted = False
         return sorted
     
+    @staticmethod
     def is_partitioned(array: list[T], mid: int, start: int = 0, 
                        end: int = -100) -> bool:
         if end == -100:
@@ -23,10 +24,10 @@ class TestSort(unittest.TestCase):
         partitioned = True
         pivot = array[mid]
         for i in range(start, mid):
-            if array[i] > pivot:
+            if array[i] > pivot: # type: ignore
                 partitioned = False
         for i in range(mid+1, end):
-            if array[i] <= pivot:
+            if array[i] <= pivot: # type: ignore
                 partitioned = False
         return partitioned
 

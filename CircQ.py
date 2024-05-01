@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar
+from typing import cast, Generic, TypeVar
 
 T = TypeVar('T')
 
@@ -9,7 +9,7 @@ class Queue(Generic[T]):
 
     INITIAL_SIZE = 4
 
-    def __init__(self):
+    def __init__(self): # type: ignore
         """Construct an empty queue."""
         self.__head = 0
         self.__tail = 0
@@ -24,7 +24,7 @@ class Queue(Generic[T]):
         """Peek at the item at the head of the queue."""
         # Pre:
         assert not self.empty()
-        return self.__items[self.__head]
+        return cast(T, self.__items[self.__head])
 
     # Mutator methods
     def add(self, new_item: T) -> None:
@@ -44,13 +44,13 @@ class Queue(Generic[T]):
         value = self.__items[self.__head] # Grab the value
         self.__items[self.__head] = None  # Clear out the space
         self.__head = (self.__head + 1) % len(self.__items)
-        return value
+        return cast(T, value)
 
     def __resize(self) -> None:
         """Increase the size of the queue."""
         # Pre:
         self.__items[self.__tail] is not None # self.__items is full
-        newItems: list[T | None] = [None] * 2 * len(self.__items)
+        newItems: list[T | None] = cast(list[T | None], [None] * 2 * len(self.__items))
 
         for i in range(len(self.__items)):
             newItems[i] = self.pop()

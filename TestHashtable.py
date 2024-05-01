@@ -5,7 +5,7 @@ from Hashtable import Hashtable
 class TestHashtable(unittest.TestCase):
 
     def setUp(self) -> None:
-        self._empty = Hashtable()
+        self._empty = Hashtable() # type: ignore
 
         self._keys = ['Zelle', 'Brown', 'Maher', 'Kharb']
         self._letterhashes = [60, 72, 45, 40, 69, 112, 88, 119]
@@ -13,7 +13,7 @@ class TestHashtable(unittest.TestCase):
         self._not_keys = ['Smith', 'Benderskyi', 'Davidson', 'Merrithew']
         self._keylist = self._keys + self._not_keys
 
-        self._4 = Hashtable()
+        self._4 = Hashtable() # type: ignore
         for i in range(len(self._keys)):
             self._4.put(self._keys[i], self._values[i])
         self._4hashes = [0, 0, 1, 0, 1, 0, 0, 3]

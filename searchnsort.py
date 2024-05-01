@@ -10,7 +10,7 @@ def binsearch(key: T, array: list[T]) -> bool:
         found = False
     elif key == array[mid]:
         found = True
-    elif key < array[mid]:
+    elif key < array[mid]: # type: ignore
         found = binsearch(key, array[:mid])
     else: # key > array[mid]
         found = binsearch(key, array[mid+1:])
@@ -27,7 +27,7 @@ def partition(array: list[T], start: int, end: int) -> int:
     mid = start+1
     top = end-1
     while top >= mid:
-        if array[mid] <= pivot:
+        if array[mid] <= pivot: # type: ignore
             mid = mid + 1
         else: # array[mid] > pivot
             # Swap in an item from top

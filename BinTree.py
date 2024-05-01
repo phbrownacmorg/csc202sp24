@@ -41,19 +41,19 @@ class BinTree(Generic[T]):
         """Get the data."""
         # Pre
         assert not self.empty()
-        return self._data
+        return cast(T, self._data)
     
     def left(self) -> 'BinTree[T]':
         """Get the left subtree."""
         # Pre:
         assert self.hasLeftChild()
-        return self._left
+        return cast(BinTree[T], self._left)
     
     def right(self) -> 'BinTree[T]':
         """Get the right subtree."""
         # Pre:
         assert self.hasRightChild()
-        return self._right
+        return cast(BinTree[T], self._right)
     
     def __len__(self) -> int:
         """Count the nodes in the tree."""

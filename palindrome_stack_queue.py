@@ -6,8 +6,8 @@ def palindrome(s: str) -> bool:
     Ignores case and non-letters."""
     pal = True
     s = s.lower()
-    q = Queue[str]()
-    st = Stack[str]()
+    q = Queue[str]() # type: ignore
+    st = Stack[str]() # type: ignore
 
     for c in s:
         if c.isalpha():

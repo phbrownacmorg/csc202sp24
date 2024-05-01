@@ -10,17 +10,17 @@ class TestDeck(unittest.TestCase):
     # setUp() will be run before each test method
     def setUp(self) -> None:
         # Empty deck
-        self._empty = Deck()
+        self._empty = Deck() # type: ignore
 
         # 52-card deck of PlayingCard
-        self._52 = Deck()
+        self._52 = Deck() # type: ignore
         self._52.add(PlayingCard.make_deck())
 
         # 108-card Uno deck
-        self._108 = Deck()
+        self._108 = Deck() # type: ignore
         self._108.add(UnoCard.make_deck())
 
-        self._160 = Deck()
+        self._160 = Deck() # type: ignore
         self._160.add(PlayingCard.make_deck())
         self._160.add(UnoCard.make_deck())
 
@@ -32,7 +32,7 @@ class TestDeck(unittest.TestCase):
     # Every method that starts with the string "test"
     # will be executed as a unit test
     def testLenEmpty(self) -> None:
-        self.assertEqual(len(Deck()), 0)
+        self.assertEqual(len(Deck()), 0) # type: ignore
 
     def testLen52(self) -> None:
         self.assertEqual(len(self._52), 52)

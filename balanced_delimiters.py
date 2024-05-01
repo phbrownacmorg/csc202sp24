@@ -3,7 +3,7 @@ from Stack import Stack
 def balanced(expr: str) -> bool:
     openers = '{(['
     closers = '})]'
-    st = Stack[str]()
+    st = Stack[str]() # type: ignore
     bal = True
     for c in expr:
         if c in openers:

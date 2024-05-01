@@ -1,9 +1,10 @@
 import copy
+from AbstractCard import AbstractCard
 from PlayingCard import PlayingCard
 
 def check_aliasing(name1: str, name2: str, 
-                  val1: list[list[PlayingCard]], 
-                  val2: list[list[PlayingCard]]) -> None:
+                  val1: list[list[AbstractCard]], 
+                  val2: list[list[AbstractCard]]) -> None:
     print(f'{name1} aliases {name2}?', val1 is val2)
     print(f'{name1} equals {name2}?', val1 == val2)
     print(f'{name1}[0] aliases {name2}[0]?', val1[0] is val2[0])
@@ -13,7 +14,7 @@ def check_aliasing(name1: str, name2: str,
     print()
 
 def main(args: list[str]) -> int:
-    list1: list[list[PlayingCard]] = \
+    list1: list[list[AbstractCard]] = \
         [[PlayingCard.makeCard('king', 'hearts')]] 
 
     list2 = list1 # Direct alias

@@ -7,7 +7,7 @@ class Queue(Generic[T]):
     The head of the queue is at index 0, and the tail is
     at the end of the list."""
 
-    def __init__(self):
+    def __init__(self): # type: ignore
         """Construct an empty queue."""
         self.__items: list[T] = []
 

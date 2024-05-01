@@ -9,7 +9,7 @@ class Deck:
     # AbstractCard, which should be pretty well covered by the
     # type checker
 
-    def __init__(self):
+    def __init__(self): # type: ignore
         """Create an empty deck."""
         self._cards: list[AbstractCard] = []
 

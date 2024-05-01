@@ -7,7 +7,7 @@ def changebase(num: int, base: int) -> str:
     as a string."""
     # Pre:
     assert num >= 0 and 2 <= base <= len(digits)
-    s = Stack[str]()
+    s = Stack[str]() # type: ignore
     while num > 0:
         # Push the least significant digit
         s.push(digits[num % base])

@@ -1,5 +1,5 @@
 from LList import LList
-from typing import SupportsFloat
+from typing import cast, SupportsFloat
 import random
 
 def make_random_list(length: int, max: float) -> LList[float]:
@@ -7,7 +7,8 @@ def make_random_list(length: int, max: float) -> LList[float]:
     # Pre:
     assert length >= 0
     if length == 0: # Base case
-        return LList[float]() # Return an empty list
+        # Return an empty list
+        return LList[float]() # type: ignore
     else:           # Recursive case
         number_list = make_random_list(length - 1, max)
         number_list.add(random.random() * max)
@@ -18,11 +19,11 @@ def sumlist(number_list: LList[SupportsFloat]) -> float:
     if number_list.empty(): # Base case
         return 0
     else:                   # Recursive case
-        return number_list.value() + sumlist(number_list.next())
+        return float(number_list.value()) + sumlist(number_list.next())
 
 def test_sumlist() -> None:
-    number_list = LList[float]()
-    assert sumlist(number_list) == 0
+    number_list = LList[SupportsFloat]() # type: ignore
+    assert sumlist(number_list) == 0 
     number_list.add(5)
     assert sumlist(number_list) == 5
     number_list.add(10)
@@ -146,7 +147,7 @@ def test_baseconvert() -> None:
     assert baseconvert(0x1b1, 12) == '301'
     print('Tests for base conversion passed.')
 
-def slowfib(n) -> int:
+def slowfib(n: int) -> int:
     """Simple recursive calculation of a Fibonacci number."""
     # Pre:
     assert n >= 0, f'n must be non-negative; {n} supplied'
@@ -155,7 +156,7 @@ def slowfib(n) -> int:
     else:
         return slowfib(n-1) + slowfib(n-2)
     
-def fib(n) -> int:
+def fib(n: int) -> int:
     """More efficient recursive FIbonacci calculation."""
     # Pre:
     assert n >= 0, f'n must be non-negative; {n} supplied'

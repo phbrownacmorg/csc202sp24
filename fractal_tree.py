@@ -1,4 +1,5 @@
 from turtle import Turtle
+from typing import cast
 import random
 
 def draw_tree(t: Turtle, length: float) -> None:
@@ -6,7 +7,7 @@ def draw_tree(t: Turtle, length: float) -> None:
     angle: float = 20
     if length > 0:
         oldwidth = t.width()
-        t.width(max(length // diff, 1))
+        t.width(cast(int, max(length // diff, 1)))
         oldcolor = t.pencolor()
         if length < 2 * diff:
             t.pencolor('green')

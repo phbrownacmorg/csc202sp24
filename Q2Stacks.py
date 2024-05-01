@@ -6,10 +6,10 @@ T = TypeVar('T')
 class Queue(Generic[T]):
     """Class to represent a queue, based on two stacks."""
 
-    def __init__(self):
+    def __init__(self): # type: ignore
         """Construct an empty queue."""
-        self.__inbox: Stack[T] = Stack[T]()
-        self.__outbox: Stack[T] = Stack[T]()
+        self.__inbox: Stack[T] = Stack[T]() # type: ignore
+        self.__outbox: Stack[T] = Stack[T]() # type: ignore
 
     # Query methods
     def empty(self) -> bool:

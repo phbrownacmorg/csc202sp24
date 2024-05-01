@@ -33,7 +33,7 @@ class TestValidDate(unittest.TestCase):
         self.assertEqual(cm.exception.args[0], 
                         "invalid literal for int() with base 10: 'two'")
 
-    def test_nonIntMonth(self) -> None:
+    def test_nonIntDay(self) -> None:
         with self.assertRaises(ValueError) as cm:
             parseDate('2/7th/2023')
         self.assertEqual(cm.exception.args[0], 
