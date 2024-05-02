@@ -39,7 +39,12 @@ class TestBST(unittest.TestCase):
         self.__15.add('Skyler')
         self.__15.add('Trig')
         self.__15.add('Tyson')
-        self.__15.add('Skyler')
+
+        self._present_values = self.__15.preorderBreadthFirst()
+        self._absent_values = ['Alice', 'Arid', 'Brandon', 'Caleb E.', 'Daniel', 
+                               'Grayson', 'Kennedy', 'Laura', 'Lydia', 'Maggie', 
+                               'Olivia', 'Stirling', 'Tom', 'Tucker', 'Washington',
+                               'Zelda']
 
     # Every method that starts with the string "test"
     # will be executed as a unit test
@@ -89,107 +94,139 @@ class TestBST(unittest.TestCase):
         self.assertEqual(len(self.__7), 7)
         self.assertEqual(len(self.__15), 15)
 
+    def testGetNode(self) -> None:
+        for s in (self._present_values + self._absent_values):
+            with self.subTest(s=s):
+                with self.assertRaises(ValueError):
+                    self.__empty.getNode(s)
+
+        self.assertEqual(self.__1.getNode('Tabitha').data(), 'Tabitha')
+        for s in self._absent_values:
+            with self.subTest(s=s):
+                with self.assertRaises(ValueError):
+                    self.__1.getNode(s)
+        
+        for s in self.__4.inorder():
+            with self.subTest(s=s):
+                self.assertEqual(self.__4.getNode(s).data(), s)
+        for s in self._absent_values:
+            with self.subTest(s=s):
+                with self.assertRaises(ValueError):
+                    self.__4.getNode(s)
+
+        for s in self._present_values[:7]:
+            with self.subTest(s=s):
+                self.assertEqual(self.__7.getNode(s).data(), s)
+        for s in self._absent_values:
+            with self.subTest(s=s):
+                with self.assertRaises(ValueError):
+                    self.__7.getNode(s)
+
+        for s in self._present_values:
+            with self.subTest(s=s):
+                self.assertEqual(self.__15.getNode(s).data(), s)
+        for s in self._absent_values:
+            with self.subTest(s=s):
+                with self.assertRaises(ValueError):
+                    self.__15.getNode(s)
+
+
+
     def testContains(self) -> None:
-        present_values = self.__15.preorderBreadthFirst()
-        absent_values = ['Alice', 'Arid', 'Brandon', 'Caleb E.', 'Daniel', 'Grayson',
-                         'Kennedy', 'Laura', 'Lydia', 'Maggie', 'Olivia', 'Stirling',
-                         'Tom', 'Tucker', 'Washington', 'Zelda']
-        for s in (present_values + absent_values):
+        for s in (self._present_values + self._absent_values):
             with self.subTest(s=s):
                 self.assertFalse(s in self.__empty)
+
         self.assertTrue('Tabitha' in self.__1)
-        for s in absent_values:
+        for s in self._absent_values:
             with self.subTest(s=s):
                 self.assertFalse(s in self.__1)
+
         for s in self.__4.inorder():
             with self.subTest(s=s):
                 self.assertTrue(s in self.__4)
-        for s in absent_values:
+        for s in self._absent_values:
             with self.subTest(s=s):
                 self.assertFalse(s in self.__4)
-        for s in present_values[:7]:
+
+        for s in self._present_values[:7]:
             with self.subTest(s=s):
                 self.assertTrue(s in self.__7)
-        for s in present_values[7:]:
+        for s in self._present_values[7:]:
             with self.subTest(s=s):
                 self.assertFalse(s in self.__7)
-        for s in absent_values:
+
+        for s in self._absent_values:
             with self.subTest(s=s):
                 self.assertFalse(s in self.__15)
-        for s in present_values:
+        for s in self._present_values:
             with self.subTest(s=s):
                 self.assertTrue(s in self.__15)
             
+    def testRemoveFromEmpty(self) -> None:
+        with self.assertRaises(ValueError):
+            self.__empty.remove('Jay')
 
+    def testRemoveNotPresent(self) -> None:
+        with self.assertRaises(ValueError):
+            self.__1.remove('Jay')
+        with self.assertRaises(ValueError):
+            self.__4.remove('Jay')
 
+    def testRemoveLeaf(self) -> None:
+        self.assertTrue('Skyler' in self.__15)
+        self.__15.remove('Skyler')
+        self.assertFalse('Skyler' in self.__15)
+        # Still a proper BST
+        self.assertTrue(self.__15._invariant()) # type: ignore
 
-    # def testEmptyTrue(self) -> None:
-    #     self.assertTrue(self.__empty.empty())
+    def testRemoveOneChildLeft(self) -> None:
+        self.assertTrue('Jay' in self.__15)
+        self.__15.remove('Jay')
+        self.assertFalse('Jay' in self.__15)
+        # Still a proper BST
+        self.assertTrue(self.__15._invariant()) # type: ignore
+        self.assertTrue('Caleb M.' in self.__15)
+        self.assertTrue('Caleb D.' in self.__15)
+        self.assertTrue('Elliott' in self.__15)
 
-    # def testEmptyFalse(self) -> None:
-    #     self.assertFalse(self.__1.empty())
-    #     self.assertFalse(self.__4.empty())
+    def testRemoveOneChildRight(self) -> None:
+        self.assertTrue('Luci' in self.__15)
+        self.__15.remove('Luci')
+        self.assertFalse('Luci' in self.__15)
+        # Still a proper BST
+        self.assertTrue(self.__15._invariant()) # type: ignore
+        self.assertTrue('Nathan' in self.__15)
+        self.assertTrue('Marco' in self.__15)
+        self.assertTrue('Skyler' in self.__15)
 
-    # def testData(self) -> None:
-    #     with self.assertRaises(AssertionError):
-    #         self.__empty.data()
-    #     self.assertEqual(self.__1.data(), 'Tabitha')
-    #     self.assertEqual(self.__4.data(), 'Ariel')
-    #     self.assertEqual(self.__4.left().data(), 'Ariana')
-    #     self.assertEqual(self.__4.right().data(), 'Luci')
-    #     self.assertEqual(self.__4.right().left().data(), 'Elliott')
+    def testRemoveTwoChildren(self) -> None:
+        self.assertTrue('Tabitha' in self.__15)
+        self.__15.remove('Tabitha')
+        self.assertFalse('Tabitha' in self.__15)
+        # Still a proper BST
+        self.assertTrue(self.__15._invariant()) # type: ignore
+        self.assertTrue('Luci' in self.__15)
+        self.assertTrue('Nathan' in self.__15)
+        self.assertTrue('Marco' in self.__15)
+        self.assertTrue('Skyler' in self.__15)
+        self.assertTrue('Zariyah' in self.__15)
+        self.assertTrue('Trig' in self.__15)
+        self.assertTrue('Tyson' in self.__15)
 
-    # def testLen(self) -> None:
-    #     self.assertEqual(len(self.__empty), 0)
-    #     self.assertEqual(len(self.__1), 1)
-    #     self.assertEqual(len(self.__4), 4)
+    def testfindSuccessor(self) -> None:
+        values = ['Khushi', 'Ariel', 'Caleb M.', 'Tabitha', 'Luci',
+                  'Nathan', 'Trig']
+        inorder = self.__15.inorder()
+        for val in values:
+            with self.subTest(val=val):
+                idx = inorder.index(val)
+                self.assertEqual(self.__15.getNode(val).findSuccessor(),
+                                 inorder[idx+1])
 
-    # def testHeight(self) -> None:
-    #     self.assertEqual(self.__empty.height(), 0)
-    #     self.assertEqual(self.__1.height(), 1)
-    #     self.assertEqual(self.__4.height(), 3)
-
-    # def testPreorder(self) -> None:
-    #     self.assertEqual(self.__empty.preorder(), [])
-    #     self.assertEqual(self.__1.preorder(), ['Tabitha'])
-    #     self.assertEqual(self.__4.preorder(), ['Ariel', 'Ariana', 'Luci', 'Elliott'])
-    #     self.assertEqual(self.__7.preorder(), ['Jay', 'Ariel', 'Ariana', 'Khushi',
-    #                                            'Tabitha', 'Luci', 'Zariyah'])
-
-    # def testPostorder(self) -> None:
-    #     self.assertEqual(self.__empty.postorder(), [])
-    #     self.assertEqual(self.__1.postorder(), ['Tabitha'])
-    #     self.assertEqual(self.__4.postorder(), ['Ariana', 'Elliott', 'Luci', 'Ariel'])
-    #     self.assertEqual(self.__7.postorder(), ['Ariana', 'Khushi', 'Ariel', 'Luci',
-    #                                             'Zariyah', 'Tabitha', 'Jay'])
-
-    # def testInorder(self) -> None:
-    #     self.assertEqual(self.__empty.inorder(), [])
-    #     self.assertEqual(self.__1.inorder(), ['Tabitha'])
-    #     self.assertEqual(self.__4.inorder(), ['Ariana', 'Ariel', 'Elliott', 'Luci'])
-    #     self.assertEqual(self.__7.inorder(), ['Ariana', 'Ariel', 'Khushi', 'Jay',
-    #                                           'Luci', 'Tabitha', 'Zariyah'])
-
-    # def testPreorderBreadthFirst(self) -> None:
-    #     self.assertEqual(self.__empty.preorderBreadthFirst(), [])
-    #     self.assertEqual(self.__1.preorderBreadthFirst(), ['Tabitha'])
-    #     self.assertEqual(self.__4.preorderBreadthFirst(), 
-    #                      ['Ariel', 'Ariana', 'Luci', 'Elliott'])
-    #     self.assertEqual(self.__7.preorderBreadthFirst(),
-    #                      ['Jay', 'Ariel', 'Tabitha', 'Ariana', 'Khushi', 'Luci', 'Zariyah'])
-
-    # def testPostorderBreadthFirst(self) -> None:
-    #     self.assertEqual(self.__empty.postorderBreadthFirst(), [])
-    #     self.assertEqual(self.__1.postorderBreadthFirst(), ['Tabitha'])
-    #     self.assertEqual(self.__4.postorderBreadthFirst(), 
-    #                      ['Elliott', 'Ariana', 'Luci', 'Ariel'])
-    #     self.assertEqual(self.__7.postorderBreadthFirst(),
-    #                      ['Ariana', 'Khushi', 'Luci', 'Zariyah', 'Ariel', 'Tabitha', 'Jay'])
-    #     self.assertEqual(self.__15.postorderBreadthFirst(),
-    #                      ['Nathan', 'Caleb D.', 'Caleb M.', 'Marco', 
-    #                       'Elliott', 'Skyler', 'Trig', 'Tyson',
-    #                       'Ariana', 'Khushi', 'Luci', 'Zariyah', 
-    #                       'Ariel', 'Tabitha', 'Jay'])
+    #     nodes = self.__15.inorder()
+    #     for i in range(len(nodes)-1):
+    #         self.assertTrue(self.__15)
 
 
 if __name__ == '__main__':

@@ -31,11 +31,11 @@ class BinTree(Generic[T]):
 
     def hasLeftChild(self) -> bool:
         """Does this node have a left child?"""
-        return self._left is not None
+        return self._left is not None and not self._left.empty()
     
     def hasRightChild(self) -> bool:
         """Does this node have a right child?"""
-        return self._right is not None
+        return self._right is not None and not self._right.empty()
     
     def data(self) -> T:
         """Get the data."""
