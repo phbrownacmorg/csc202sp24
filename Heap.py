@@ -13,10 +13,10 @@ class Heap(Generic[T]):
         for idx in range(1, len(self._heap)):
             # max-heap property.  If every element is less than or equal to its parent,
             # we have a max heap.
-            is_heap = is_heap and (self._heap[idx] <= self._heap[(idx - 1)//2])
+            is_heap = is_heap and (self._heap[idx] <= self._heap[(idx - 1)//2]) # type: ignore
         return is_heap
 
-    def __init__(self):
+    def __init__(self): # type: ignore
         """Constructs an empty heap."""
         self._heap: list[T] = []
         # Post:
@@ -45,7 +45,7 @@ class Heap(Generic[T]):
         restoring the heap property."""
         if idx > 0: # If idx == 0, do nothing
             p = (idx - 1)//2
-            if self._heap[idx] > self._heap[p]:
+            if self._heap[idx] > self._heap[p]: # type: ignore
                 # Swap
                 self._heap[idx], self._heap[p] = \
                     self._heap[p], self._heap[idx]
@@ -63,7 +63,7 @@ class Heap(Generic[T]):
 
         # If there is a right child, and the right child is bigger than the left...
         if right_child_idx < len(self) and \
-            self._heap[left_child_idx] < self._heap[right_child_idx]:
+            self._heap[left_child_idx] < self._heap[right_child_idx]: # type: ignore
             result = right_child_idx
         return result
 
@@ -73,7 +73,7 @@ class Heap(Generic[T]):
         if 2 * idx + 1 < len(self): # if the item at IDX has no children, do nothing
             big_child_idx = self._big_child_idx(idx)
             # Swap?
-            if self._heap[idx] < self._heap[big_child_idx]:
+            if self._heap[idx] < self._heap[big_child_idx]: # type: ignore
                 self._heap[idx], self._heap[big_child_idx] = \
                     self._heap[big_child_idx], self._heap[idx]
                 self._perc_down(big_child_idx)

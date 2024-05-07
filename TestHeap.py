@@ -5,18 +5,18 @@ from Heap import Heap
 class TestHeap(unittest.TestCase):
 
     def setUp(self) -> None:
-        self._empty = Heap[int]()
+        self._empty = Heap[int]() # type: ignore
 
-        self._1 = Heap[int]()
+        self._1 = Heap[int]() # type: ignore
         self._1.add(17)
 
-        self._4 = Heap[int]()
+        self._4 = Heap[int]() # type: ignore
         self._4.add(32)
         self._4.add(23)
         self._4.add(4)
         self._4.add(58)
 
-        self._7 = Heap[int]()
+        self._7 = Heap[int]() # type: ignore
         self._7.add(32)
         self._7.add(23)
         self._7.add(4)
